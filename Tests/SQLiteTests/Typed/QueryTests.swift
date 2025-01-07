@@ -3,7 +3,7 @@ import XCTest
 import sqlite3
 #elseif SQLITE_SWIFT_SQLCIPHER
 import SQLCipher
-#elseif os(Linux)
+#elseif canImport(CSQLite)
 import CSQLite
 #else
 import SQLite3
@@ -354,7 +354,7 @@ class QueryTests: XCTestCase {
         )
     }
 
-    #if !os(Linux) // depends on exact JSON serialization
+    #if !os(Linux) && !canImport(Android) // depends on exact JSON serialization
     func test_insert_encodable_with_nested_encodable() throws {
         let emails = Table("emails")
         let value1 = TestCodable(int: 1, string: "2", bool: true, float: 3, double: 4,

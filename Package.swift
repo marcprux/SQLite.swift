@@ -39,6 +39,17 @@ let package = Package(
     ]
 )
 
+import Foundation
+// Android does not permit linking to its vendored sqlite3.so, so we need to
+// include a bundled version of SQLite when cross-compiling to Android
+if ProcessInfo.processInfo.environment["TARGET_OS_ANDROID"] == "1" || true {
+package.dependencies = [
+    .package(url: "https://github.com/swift-everywhere/CSQLite.git", from: "3.47.2")
+]
+package.targets.first?.dependencies += [
+    .product(name: "CSQLite", package: "CSQLite")
+]
+} else {
 #if os(Linux)
 package.dependencies = [
     .package(url: "https://github.com/stephencelis/CSQLite.git", from: "0.0.3")
@@ -47,3 +58,4 @@ package.targets.first?.dependencies += [
     .product(name: "CSQLite", package: "CSQLite")
 ]
 #endif
+}

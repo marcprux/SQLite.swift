@@ -28,7 +28,7 @@ import Dispatch
 import sqlite3
 #elseif SQLITE_SWIFT_SQLCIPHER
 import SQLCipher
-#elseif os(Linux)
+#elseif canImport(CSQLite)
 import CSQLite
 #else
 import SQLite3

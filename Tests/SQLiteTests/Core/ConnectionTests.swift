@@ -7,7 +7,7 @@ import Dispatch
 import sqlite3
 #elseif SQLITE_SWIFT_SQLCIPHER
 import SQLCipher
-#elseif os(Linux)
+#elseif canImport(CSQLite)
 import CSQLite
 #else
 import SQLite3
@@ -374,7 +374,7 @@ class ConnectionTests: SQLiteTestCase {
     }
 
     // https://github.com/stephencelis/SQLite.swift/issues/1071
-    #if !os(Linux)
+    #if !os(Linux) && !canImport(Android)
     func test_createFunction_withArrayArguments() throws {
         db.createFunction("hello") { $0[0].map { "Hello, \($0)!" } }
 

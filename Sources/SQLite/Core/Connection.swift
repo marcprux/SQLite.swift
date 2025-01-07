@@ -28,7 +28,7 @@ import Dispatch
 import sqlite3
 #elseif SQLITE_SWIFT_SQLCIPHER
 import SQLCipher
-#elseif os(Linux)
+#elseif canImport(CSQLite)
 import CSQLite
 #else
 import SQLite3
@@ -440,10 +440,16 @@ public final class Connection {
         if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
             trace_v2(callback)
         } else {
+            #if canImport(CSQLite)
+            // deprecated trace_v1 is not included in the SQLite source build
+            trace_v2(callback)
+            #else
             trace_v1(callback)
+            #endif
         }
     }
 
+    #if !canImport(CSQLite) // deprecated trace_v1 is not included in the SQLite source build
     @available(OSX, deprecated: 10.12)
     @available(iOS, deprecated: 10.0)
     @available(watchOS, deprecated: 3.0)
@@ -466,6 +472,7 @@ public final class Connection {
         )
         trace = box
     }
+    #endif
 
     @available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *)
     fileprivate func trace_v2(_ callback: ((String) -> Void)?) {
