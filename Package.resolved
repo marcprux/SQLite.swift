@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "csqlite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swift-everywhere/CSQLite.git",
+      "state" : {
+        "revision" : "9130cc01ad532506d1fd77d459c742d3a13ce275",
+        "version" : "3.47.2"
+      }
+    }
+  ],
+  "version" : 2
+}
