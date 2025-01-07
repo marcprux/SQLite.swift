@@ -2,7 +2,7 @@ import XCTest
 import SQLite
 
 // https://github.com/stephencelis/SQLite.swift/issues/1071
-#if !os(Linux) && !canImport(Android)
+#if !os(Linux) && !os(Android)
 
 class CustomFunctionNoArgsTests: SQLiteTestCase {
     typealias FunctionNoOptional              = () -> SQLite.Expression<String>
